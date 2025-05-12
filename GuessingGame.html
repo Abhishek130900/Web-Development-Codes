@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guessing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .game-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      width: 100%;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .message {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Number Guessing Game</h1>
+  <div class="game-box">
+    <p>Guess a number between 1 and 100</p>
+    <input type="number" id="userInput" placeholder="Enter your guess" min="1" max="100" />
+    <button onclick="checkGuess()">Submit</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    const number = Math.floor(Math.random() * 100) + 1;
+    let chances = 0;
+
+    function checkGuess() {
+      const input = document.getElementById("userInput");
+      const message = document.getElementById("message");
+      const guess = Number(input.value);
+      chances++;
+
+      if (!guess || guess < 1 || guess > 100) {
+        message.textContent = "⛔ Please enter a valid number between 1 and 100.";
+        return;
+      }
+
+      if (guess > number) {
+        message.textContent = "📈 Too high! Try a smaller number.";
+      } else if (guess < number) {
+        message.textContent = "📉 Too low! Try a bigger number.";
+      } else {
+        const score = 100 - chances;
+        message.innerHTML = `🎉 Correct! The number was <strong>${number}</strong>.<br>Your score: <strong>${score}</strong>`;
+        input.disabled = true;
+      }
+
+      input.value = "";
+      input.focus();
+    }
+  </script>
+
+</body>
+</html>
